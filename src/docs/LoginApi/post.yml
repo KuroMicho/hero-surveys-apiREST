@@ -1,0 +1,31 @@
+tags:
+  - Authentification
+summary: User log in to create a JWT_TOKEN.
+responses:
+  200:
+    description: OK.
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/user_log_in"
+  302:
+    description: Found.
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/api_response"
+  401:
+    description: user email/password supplied already exists.
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/api_fail_response"
+  404:
+    description: User not found.
+requestBody:
+  content:
+    application/json:
+      schema:
+        $ref: "#/components/schemas/login_user"
+  description: Login user object
+  required: true

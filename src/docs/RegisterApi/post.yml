@@ -1,0 +1,31 @@
+tags:
+  - Authentification
+summary: User registration.
+responses:
+  200:
+    description: OK.
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/api_response"
+  201:
+    description: Created.
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/register_user"
+  400:
+    description: Fails to register due to bad request data.
+  409:
+    description: Invalid user email/password supplied
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/api_fail_response"
+requestBody:
+  content:
+    application/json:
+      schema:
+        $ref: "#/components/schemas/register_user"
+  description: Register user object
+  required: true

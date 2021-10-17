@@ -1,0 +1,23 @@
+tags:
+  - Section
+security:
+  - user_auth: []
+summary: Delete a section by section id.
+parameters:
+  - name: id
+    in: path
+    description: section id to delete.
+    required: true
+    schema:
+      type: integer
+      format: int64
+      example: "1"
+responses:
+  204:
+    description: No Content.
+  404:
+    description: Item not found.
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/api_fail_response"

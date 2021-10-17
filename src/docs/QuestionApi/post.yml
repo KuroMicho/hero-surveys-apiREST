@@ -1,0 +1,27 @@
+tags:
+  - Question
+summary: Create a new question. Auth is required. Token automatically is refreshed.
+security:
+  - user_auth: []
+responses:
+  200:
+    description: OK.
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/api_response"
+  201:
+    description: Created.
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/create_question"
+  400:
+    description: Fails to register due to bad request data.
+requestBody:
+  content:
+    application/json:
+      schema:
+        $ref: "#/components/schemas/create_question"
+  description: Create question object
+  required: true

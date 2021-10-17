@@ -1,0 +1,14 @@
+summary: To refresh JWT TOKEN.
+security:
+  - user_auth: []
+tags:
+  - Authentification
+responses:
+  200:
+    description: "TOKEN REFRESHED."
+  500:
+    description:
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/api_fail_response"

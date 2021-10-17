@@ -1,0 +1,26 @@
+tags:
+  - Survey
+# security:
+#   - user_auth: []
+summary: Show the survey by url. Auth is optional.
+parameters:
+  - name: url
+    in: path
+    description: Survey to show.
+    required: true
+    schema:
+      type: string
+      example: "abc123"
+responses:
+  200:
+    description: OK.
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/survey"
+  404:
+    description: Item not found.
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/api_fail_response"

@@ -1,0 +1,29 @@
+tags:
+  - Feedback
+summary: Give an opinion about the APP.
+responses:
+  200:
+    description: OK.
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/api_response"
+  400:
+    description: Fails to create comment due to bad request data.
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/api_fail_response"
+  409:
+    description: Visitant already have shared one feedback.
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/api_fail_response"
+requestBody:
+  content:
+    application/json:
+      schema:
+        $ref: "#/components/schemas/share_feedback"
+  description: Share a feedback object
+  required: true

@@ -1,0 +1,18 @@
+tags:
+  - Section
+summary: Show all the sections data. Auth is required. Token automatically is refreshed.
+security:
+  - user_auth: []
+responses:
+  200:
+    description: OK.
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/section"
+  204:
+    description: No Content.
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/api_fail_response"

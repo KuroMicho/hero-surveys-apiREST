@@ -1,0 +1,36 @@
+tags:
+  - Question
+security:
+  - user_auth: []
+summary: Update a question by question id.
+parameters:
+  - name: id
+    in: path
+    description: question id to update.
+    required: true
+    schema:
+      type: integer
+      format: int64
+      example: "1"
+responses:
+  200:
+    description: OK.
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/api_response"
+  400:
+    description: Fails to update due to bad request data.
+  404:
+    description: Item not found.
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/api_fail_response"
+requestBody:
+  content:
+    application/json:
+      schema:
+        $ref: "#/components/schemas/create_question"
+  description: Update question object
+  required: true

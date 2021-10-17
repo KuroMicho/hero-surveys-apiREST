@@ -1,0 +1,18 @@
+tags:
+  - Survey
+summary: Short url to redirect to public url.
+parameters:
+  - name: short_url
+    in: path
+    description: Link for make redirect.
+    required: true
+    schema:
+      type: string
+      example: "9abcz"
+responses:
+  404:
+    description: Item not found.
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/api_fail_response"

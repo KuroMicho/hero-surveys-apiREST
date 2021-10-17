@@ -1,0 +1,8 @@
+tags:
+  - Authentification
+security:
+  - user_auth: []
+summary: Logout to close the actual session and delete the cookies.
+responses:
+  204:
+    description: No Content.

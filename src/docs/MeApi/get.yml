@@ -1,0 +1,12 @@
+tags:
+  - Authentification
+security:
+  - user_auth: []
+summary: Show the user data. Fresh Token is required when token expires.
+responses:
+  200:
+    description: OK.
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/user"
