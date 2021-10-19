@@ -14,7 +14,7 @@ from swagger import swagger_config, template
 from src.constants.http_status_codes import HTTP_302_FOUND, HTTP_404_NOT_FOUND, HTTP_500_INTERNAL_SERVER_ERROR
 # from config import config as Config
 from src.resources.routes import init_api
-env_config = os.getenv("APP_SETTINGS", "config.ProductionConfig")
+env_config = os.getenv("APP_SETTINGS", "config.DevelopmentConfig")
 
 cors = CORS()
 db = SQLAlchemy()
@@ -25,12 +25,16 @@ api = Api()
 
 def create_app():
     app = Flask(__name__)
+
     app.config.from_object(env_config)
     app.config.from_mapping(
-            JWT_TOKEN_LOCATION=['cookies'],
-            JWT_SESSION_COOKIE=True,
-            JWT_ACCESS_COOKIE_PATH='/',
-            JWT_REFRESH_COOKIE_PATH='/',
+            JWT_TOKEN_LOCATION=['headers'],
+            CORS_HEADERS = "Content-Type",
+            # JWT_SESSION_COOKIE=True,
+            # JWT_ACCESS_COOKIE_PATH='/',
+            # JWT_REFRESH_COOKIE_PATH='/',
+            # JWT_COOKIE_SAMESITE = 'None',
+            # JWT_COOKIE_SECURE = True,
             JWT_ACCESS_TOKEN_EXPIRES=timedelta(minutes=30),
             JWT_COOKIE_CSRF_PROTECT=False,  # Change in production to True
             JWT_CSRF_CHECK_FORM=True,
@@ -41,13 +45,18 @@ def create_app():
     ma.init_app(app)
     api.init_app(app)
     bcrypt.init_app(app)
-    cors.init_app(app)
+    cors.init_app(app,  resources={r"/*": {"origins": "http://localhost:3000"}}, supports_credentials=True)
     Swagger(app, config=swagger_config, template=template, parse=True)
     jwt = JWTManager(app)
 
     # with app.app_context():
     #     db.drop_all()
     #     db.create_all()
+
+    # @app.after_request
+    # def middleware_for_response(response):
+    #     response.headers.add('Access-Control-Allow-Credentials', 'true')
+    #     return response
 
     @jwt.unauthorized_loader
     def unauthorized_callback(callback):
@@ -64,7 +73,7 @@ def create_app():
         resp = make_response(jsonify({
             "message": "Invalid Fresh/Non-Fresh Access token in auth header"
         }), HTTP_302_FOUND)
-        unset_jwt_cookies(resp)
+        # unset_jwt_cookies(resp)
         return resp, 302
 
     @jwt.expired_token_loader
@@ -72,7 +81,7 @@ def create_app():
         # Expired auth header
         resp = make_response(
             redirect('localhost:5000/author/refresh'))
-        unset_access_cookies(resp)
+        # unset_access_cookies(resp)
         return resp, 302
 
     @app.errorhandler(HTTP_404_NOT_FOUND)

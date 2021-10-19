@@ -21,7 +21,7 @@ manager.add_command('db', MigrateCommand)
 
 @manager.command
 def run():
-    app.run(host='127.0.0.1', port='5000')
+    app.run(host='localhost', port='5000')
     logging.info('Flask app run')
 
 @manager.command

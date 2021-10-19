@@ -36,6 +36,7 @@ def init_api(api):
         QuestionApi, '/survey/<int:survey_id>/section/<int:section_id>/question/<int:question_id>')
     # answer
     # api.add_resource(ManipulateAnswerApi, '/answer')
+    # 
     # public
     api.add_resource(PublicUrlApi, '/s/<string:url>')
     api.add_resource(PublicRedirectApi, '/<string:short_url>')

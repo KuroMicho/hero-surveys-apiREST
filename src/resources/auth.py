@@ -21,17 +21,19 @@ def assign_access_refresh_token(author_id, message):
 
     access_token = create_access_token(identity=author.id, fresh=True)
     refresh_token = create_refresh_token(identity=author.id)
-    resp = jsonify({"message": message, "access": access_token,
-                   "username": author.username, "email": author.email})
-    set_access_cookies(resp, access_token)
-    set_refresh_cookies(resp, refresh_token)
+    resp = jsonify({"access": access_token, "refresh": refresh_token,
+                   "username": author.username, "id": author.id})
+    # set_access_cookies(resp, access_token)
+    # set_refresh_cookies(resp, refresh_token)
+    resp.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
+    resp.headers.add('Access-Control-Allow-Credentials', 'true')
     resp.status_code = HTTP_302_FOUND
     return resp
 
 
 def unset_jwt():
     resp = make_response(jsonify({"message": "Logout"}), HTTP_200_OK)
-    unset_jwt_cookies(resp)
+    # unset_jwt_cookies(resp)
     return resp
 
 # refresh token
@@ -41,9 +43,10 @@ class RefreshApi(Resource):
     @jwt_required(refresh=True)
     def get(self):
         author_id = get_jwt_identity()
-        new_token = create_access_token(identity=author_id, fresh=False)
-        resp = make_response(jsonify({"access_token": new_token}))
-        set_access_cookies(resp, new_token)
+        new_token_access = create_access_token(identity=author_id, fresh=False)
+        new_token_refresh = create_refresh_token(identity=author_id)
+        resp = make_response(jsonify({"access": new_token_access,"refresh": new_token_refresh}), HTTP_200_OK)
+        # set_access_cookies(resp, new_token)
         return resp
 
 # action to register
