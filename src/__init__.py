@@ -22,7 +22,6 @@ bcrypt = Bcrypt()
 ma = Marshmallow()
 api = Api()
 
-@cross_origin(supports_credentials=True)
 def create_app():
     app = Flask(__name__)
 
@@ -52,10 +51,10 @@ def create_app():
     #     db.drop_all()
     #     db.create_all()
 
-    # @app.after_request
-    # def middleware_for_response(response):
-    #     response.headers.add('Access-Control-Allow-Credentials', 'true')
-    #     return response
+    @app.after_request
+    def middleware_for_response(response):
+        response.headers.add('Access-Control-Allow-Origins', 'true')
+        return response
 
     @jwt.unauthorized_loader
     def unauthorized_callback(callback):
