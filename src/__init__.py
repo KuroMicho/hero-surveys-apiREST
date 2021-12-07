@@ -45,7 +45,7 @@ def create_app():
     ma.init_app(app)
     api.init_app(app)
     bcrypt.init_app(app)
-    cors.init_app(app,  resources={r"/*": {"origins": "http://localhost:3000"}}, supports_credentials=True)
+    cors.init_app(app,  resources={r"/*": {"origins": "https://rest-surveys.herokuapp.com"}}, supports_credentials=True)
     Swagger(app, config=swagger_config, template=template, parse=True)
     jwt = JWTManager(app)
 
