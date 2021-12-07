@@ -14,7 +14,7 @@ from swagger import swagger_config, template
 from src.constants.http_status_codes import HTTP_302_FOUND, HTTP_404_NOT_FOUND, HTTP_500_INTERNAL_SERVER_ERROR
 # from config import config as Config
 from src.resources.routes import init_api
-env_config = os.getenv("APP_SETTINGS", "config.DevelopmentConfig")
+env_config = os.getenv("APP_SETTINGS", "config.ProductionConfig")
 
 cors = CORS()
 db = SQLAlchemy()
@@ -52,8 +52,8 @@ def create_app():
     #     db.create_all()
 
     @app.after_request
-    def middleware_for_response(response):
-        response.headers.add('Access-Control-Allow-Origins', 'true')
+    def after_request(response):
+        response.headers.add('Access-Control-Allow-Origins', '*')
         return response
 
     @jwt.unauthorized_loader
