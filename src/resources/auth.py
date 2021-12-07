@@ -25,7 +25,7 @@ def assign_access_refresh_token(author_id, message):
                    "username": author.username, "id": author.id})
     # set_access_cookies(resp, access_token)
     # set_refresh_cookies(resp, refresh_token)
-    resp.headers.add('Access-Control-Allow-Origin', *)
+    resp.headers.add('Access-Control-Allow-Origin', '*')
     resp.headers.add('Access-Control-Allow-Credentials', 'true')
     resp.status_code = HTTP_302_FOUND
     return resp
