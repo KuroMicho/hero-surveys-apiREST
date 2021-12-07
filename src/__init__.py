@@ -8,7 +8,7 @@ from flask_jwt_extended.utils import unset_access_cookies, unset_jwt_cookies
 from flask_marshmallow import Marshmallow
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from flasgger import Swagger
 from swagger import swagger_config, template
 from src.constants.http_status_codes import HTTP_302_FOUND, HTTP_404_NOT_FOUND, HTTP_500_INTERNAL_SERVER_ERROR
@@ -22,7 +22,7 @@ bcrypt = Bcrypt()
 ma = Marshmallow()
 api = Api()
 
-
+@cross_origin(supports_credentials=True)
 def create_app():
     app = Flask(__name__)
 
@@ -45,7 +45,6 @@ def create_app():
     ma.init_app(app)
     api.init_app(app)
     bcrypt.init_app(app)
-    cors.init_app(app,  resources={r"/*": {"origins": "*", "Access-Control-Allow-Origin": "*"}}, supports_credentials=True)
     Swagger(app, config=swagger_config, template=template, parse=True)
     jwt = JWTManager(app)
 
