@@ -45,7 +45,7 @@ def create_app():
     ma.init_app(app)
     api.init_app(app)
     bcrypt.init_app(app)
-    cors.init_app(app,  resources={r"/*": {"origins": "*"}}, supports_credentials=True)
+    cors.init_app(app,  resources={r"/*": {"origins": "*", "allow_headers": "*", "expose_headers": "*"}}, supports_credentials=True)
     Swagger(app, config=swagger_config, template=template, parse=True)
     jwt = JWTManager(app)
 
